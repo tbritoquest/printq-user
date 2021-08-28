@@ -1,5 +1,5 @@
 <template>
-  <p>Home</p>
+  <p>Akuafoil</p>
 </template>
 
 <script>
