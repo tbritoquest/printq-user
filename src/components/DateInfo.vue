@@ -24,6 +24,9 @@
             <input type="date" class="date-input" name="sampleDate"
                                 v-model="sampleDateValue"
                                 :min="sampleDateMin">
+            <p class="help is-danger" v-if="isInvalid('sampleDate')">
+                        Please select a date
+            </p>
         </div>
         </div>
     </div>
@@ -45,7 +48,7 @@
 
     <br><br>
 
-        <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
+        <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button> -->
         <button @click="handleSubmit" class="button round next primary" type="button"><i class="fas fa-arrow-right"></i></button>
 
        
@@ -56,9 +59,11 @@
 import format from 'date-fns/format'
 
 export default {
-    emits: ["previous","logDateInfo"],
+    emits: ["logDateInfo"],
     data(){
+        
         return{
+            errors:null,
             orderDateValue:format(new Date(),'yyyy-MM-dd'),
             sampleDateMin:format(new Date(),'yyyy-MM-dd'),
             sampleDateValue:""
@@ -68,12 +73,22 @@ export default {
    
     methods: {
         handleSubmit(){
-           
-            // this.$emit("logPersonalInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+           this.checkForm()
+
+           if(this.errors.size===0){
+                this.$emit("logDateInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+           }
         },
-        previous(){
-            this.$emit("previous")
+        checkForm(){
+            this.errors = new Set()
+            if(!this.sampleDateValue){
+                this.errors.add("sampleDate")
+            }
+        },
+        isInvalid(key){
+            return this.errors && this.errors.has(key)
         }
+       
     }
  
 }

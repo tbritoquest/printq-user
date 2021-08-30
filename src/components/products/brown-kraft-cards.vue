@@ -43,6 +43,7 @@ export default {
     },
     methods:{
         logPersonalInfo(event){
+            console.log("hello- logPErsonal Info")
             this.personalInfoObj = event
             this.formStep.push(2)
         },
