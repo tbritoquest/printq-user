@@ -6,12 +6,17 @@
 
    <form onsubmit="return mySubmitFunction(event)">
     
-       <PersonalInfo @logPersonalInfo="logPersonalInfo" v-if="currentStep===1"/>
+       <div v-show="currentStep===1">
+            <PersonalInfo @logPersonalInfo="logPersonalInfo" />
+       </div>
 
-        <Project @logProjectInfo="logProjectInfo" v-if="currentStep===2" @previous="previous" />
+       <div v-show="currentStep===2" class="box">
+            <Project @logProjectInfo="logProjectInfo" @previous="previous" />
+       </div>
 
-        <DateInfo @logDateInfo="logDateInfo" v-if="currentStep===3" @previous="previous" />
-
+        <div v-show="currentStep===3">
+            <DateInfo @logDateInfo="logDateInfo"  @previous="previous" />
+        </div>
    </form>
 
    

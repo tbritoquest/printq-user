@@ -48,7 +48,7 @@
 
     <br><br>
 
-        <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button> -->
+        <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
         <button @click="handleSubmit" class="button round next primary" type="button"><i class="fas fa-arrow-right"></i></button>
 
        
@@ -59,7 +59,7 @@
 import format from 'date-fns/format'
 
 export default {
-    emits: ["logDateInfo"],
+    emits: ["logDateInfo","previous"],
     data(){
         
         return{
@@ -87,7 +87,10 @@ export default {
         },
         isInvalid(key){
             return this.errors && this.errors.has(key)
-        }
+        },
+        previous(){
+            this.$emit("previous")
+        },
        
     }
  

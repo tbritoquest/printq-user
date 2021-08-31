@@ -1,38 +1,39 @@
 <template>
 
-    <h3 class="title is-3">Project</h3>
+   
+        <h3 class="title is-3">Project</h3>
 
-    <div id="form-fields">
-    <div class="field spec">
-        <label class="label">Product Category</label>
-        <div class="select ">
-            <select>
-            <option value="" disabled selected>Select Product Category</option>
-            <option value="70">Business Cards</option> 
-            <option value="bkc-gc80">Greeting Cards</option>
-            <option value="bkc-m70">Menu</option>
-            <option value="bkc-pc100">Postcards</option>
-            <option value="bkc-ss100">Sell Sheets</option>
-            <option value="bkc-tc100">Trading Cards</option>
-            </select>
+        <div id="form-fields">
+        <div class="field spec">
+            <label class="label">Product Category</label>
+            <div class="select ">
+                <select>
+                <option value="" disabled selected>Select Product Category</option>
+                <option value="70">Business Cards</option> 
+                <option value="bkc-gc80">Greeting Cards</option>
+                <option value="bkc-m70">Menu</option>
+                <option value="bkc-pc100">Postcards</option>
+                <option value="bkc-ss100">Sell Sheets</option>
+                <option value="bkc-tc100">Trading Cards</option>
+                </select>
+            </div>
         </div>
-    </div>
 
 
-    </div><br>
+        </div><br>
 
 
 
-    <div class="field is-grouped mb-80">
-        <div class="control">
-        <button class="button is-link is-light" id="back-button" @click="prevQuestion" style="display: none;" type="button">Previous</button>
+        <div class="field is-grouped mb-80">
+            <div class="control">
+            <button class="button is-link is-light" id="back-button" @click="prevQuestion" style="display: none;" type="button">Previous</button>
+            </div>
+            <div class="control">
+            <button class="button is-link " @click="nextQuestion" type="button" id="next-button">Next</button>
+            </div>
         </div>
-        <div class="control">
-        <button class="button is-link " @click="nextQuestion" type="button" id="next-button">Next</button>
-        </div>
-    </div>
 
-    <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button> -->
+    <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
     <button @click="handleSubmit" class="button round next primary" type="button" v-if="showNextBtn"><i class="fas fa-arrow-right"></i></button>
 
 
@@ -119,7 +120,7 @@ export default {
         renderNextQuestion(){
 
                 let parentNode = document.querySelector("#form-fields")
-                let node= document.querySelector(".field")
+                let node= parentNode.querySelector(".field")
                 let cloneNode = node.cloneNode(true)
                 cloneNode.querySelector("select").textContent = ""
 

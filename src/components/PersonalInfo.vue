@@ -1,14 +1,6 @@
 <template>
     <h3 class="title is-3">Personal Info</h3>
 
-    <!--Errors-->
-    <!-- <p v-if="errors.length">
-    <b>Please correct the following error(s):</b>
-    <ul>
-      <li v-for="error in errors">{{ error }}</li>
-    </ul>
-  </p> -->
-
     <div class="columns">
         <!--first name-->
         <div class="column">

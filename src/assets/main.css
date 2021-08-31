@@ -4,6 +4,10 @@
     --orange-color: #ff6f21;
 }
 
+/* .primary{
+    background-color: var(--purple-color);
+    color:#fff;
+} */
 .grid-2{
     display:grid;display: grid;grid-template-columns: 1fr 5fr;height:100%;
 }
@@ -58,8 +62,13 @@ input[name="orderDate"]{
 }
 .content{
     overflow-y: scroll;
+    /* overflow:hidden; */
 }
 
 .mb-80{
     margin-bottom: 80px;
+}
+#form-fields{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 }
