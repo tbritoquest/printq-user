@@ -62,7 +62,8 @@
             </div>
         </div><br><br>
 
-        <button @click="handleSubmit" class="button round next" type="button"><i class="fas fa-arrow-right"></i></button>
+        <!-- <button @click="handleSubmit" class="button round next" type="button"><i class="fas fa-arrow-right"></i></button> -->
+        <button @click="handleSubmit" class="button next" type="button">NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 </template>
 
 <script>

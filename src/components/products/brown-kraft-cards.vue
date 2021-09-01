@@ -17,10 +17,11 @@
         <div v-show="currentStep===3">
             <DateInfo @logDateInfo="logDateInfo"  @previous="previous" />
         </div>
+
    </form>
 
-   
-
+    <Review @handleSubmit="handleSubmit" :personalInfoObj="personalInfoObj" :projectInfoObj="projectInfoObj" :dateInfoObj="dateInfoObj" v-if="currentStep===4" @previous="previous" />
+    
 </template>
 
 <script>
@@ -28,7 +29,7 @@ import {ref} from 'vue'
 import PersonalInfo from '../PersonalInfo.vue'
 import DateInfo from '../DateInfo.vue'
 import Project from '../products/projects/brown-kraft-project.vue'
-
+import Review from '../Review.vue'
 
 
 export default {
@@ -36,11 +37,13 @@ export default {
         PersonalInfo,
         DateInfo,
         Project,
+        Review
     },
     data(){
         return {
             personalInfoObj: null,
             projectInfoObj: null,
+            dateInfoObj:null,
             showPersonalInfo: true,
             showDateInfo: false,
             formStep: [1]
@@ -48,7 +51,6 @@ export default {
     },
     methods:{
         logPersonalInfo(event){
-            console.log("hello- logPErsonal Info")
             this.personalInfoObj = event
             this.formStep.push(2)
         },
@@ -57,14 +59,17 @@ export default {
             this.formStep.push(3)
         },
         logDateInfo(event){
-            console.log("log date info")
+            this.dateInfoObj = event
+            this.formStep.push(4)
             /**
              * submit form
              */
         },
         previous(event){
-            console.log("previous")
             this.formStep.pop()
+        },
+        handleSubmit(event){
+            console.log("submit")
         }
 
     },

@@ -50,12 +50,25 @@ button.round{
 button.next{
     position: absolute;
     right: 1.5em;
-    bottom: 2em;
+    bottom: 3em;
+
+    font-size: 14px;
+    font-weight: bold;
+    background: var(--purple-color);
+    color: #fff !important;
+}
+button.next:hover{
+    color:#fff;
 }
 button.previous{
     position: absolute;
     left: 1.5em;
-    bottom: 2em;
+    bottom: 3.5em;
+    background-color: transparent;
+    border:none;
+    color:#757575;
+    font-weight:bold;
+    cursor:pointer
 }
 input[name="orderDate"]{
     background:transparent !important;

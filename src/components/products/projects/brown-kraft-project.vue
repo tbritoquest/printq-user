@@ -33,8 +33,14 @@
             </div>
         </div>
 
-    <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
-    <button @click="handleSubmit" class="button round next primary" type="button" v-if="showNextBtn"><i class="fas fa-arrow-right"></i></button>
+
+    <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button>
+    <button @click="handleSubmit" class="button next" type="button" v-if="showNextBtn">NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
+
+    <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button> -->
+    
+    
+    <!-- <button @click="handleSubmit" class="button round next primary" type="button" v-if="showNextBtn"><i class="fas fa-arrow-right"></i></button> -->
 
 
     

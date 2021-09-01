@@ -40,7 +40,7 @@
     <div class="field-body">
         <div class="field">
         <div class="control">
-            <textarea class="textarea" placeholder="Notes"></textarea>
+            <textarea class="textarea" placeholder="Notes" v-model="notes"></textarea>
         </div>
         </div>
     </div>
@@ -48,10 +48,12 @@
 
     <br><br>
 
-        <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
-        <button @click="handleSubmit" class="button round next primary" type="button"><i class="fas fa-arrow-right"></i></button>
+        <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
+        <button @click="handleSubmit" class="button round next primary" type="button"><i class="fas fa-arrow-right"></i></button> -->
 
-       
+    <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button>
+    <button @click="handleSubmit" class="button next" type="button" >NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
+
 </template>
 
 <script>
@@ -66,7 +68,8 @@ export default {
             errors:null,
             orderDateValue:format(new Date(),'yyyy-MM-dd'),
             sampleDateMin:format(new Date(),'yyyy-MM-dd'),
-            sampleDateValue:""
+            sampleDateValue:"",
+            notes: ""
         }
 
     },
@@ -76,7 +79,7 @@ export default {
            this.checkForm()
 
            if(this.errors.size===0){
-                this.$emit("logDateInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+                this.$emit("logDateInfo", {orderDateValue:this.orderDateValue,sampleDateValue:this.sampleDateValue,Notes:this.notes})
            }
         },
         checkForm(){
