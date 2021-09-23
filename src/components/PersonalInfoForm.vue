@@ -2,6 +2,11 @@
 <div style="max-width:1024px;width:100%;">
     <!-- <h3 class="title is-3">Personal Info</h3> -->
 
+    <div class="notification is-light" v-bind:class="{ 'is-danger': this.error, 'is-success': this.success }" v-if="this.error || this.success">
+        <button class="delete"></button>
+        <p>{{error || success}} </p>
+    </div>
+
     <div class="columns">
         <!--first name-->
         <div class="column">
@@ -70,6 +75,8 @@
 
 <script>
 import {ref} from 'vue'
+import axios from 'axios'
+
 export default {
     emits: ["logPersonalInfo"],
     data(){
@@ -79,17 +86,36 @@ export default {
             lastName: null,
             address: null,
             email: null,
-            phone: null
+            phone: null,
+            error: null,
         }
 
     },
     methods: {
         handleSubmit(){
             this.checkForm()
-           
-            if(this.errors.size===0){
-                this.$emit("logPersonalInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+            this.error = null
+            if(this.errors.size === 0){
+                axios.post('/api/customers', {
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    address: this.address,
+                    email: this.email,
+                    phone: this.phone
+                })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    this.error = error
+                    console.log({error});
+                })
             }
+            
+
+            // if(this.errors.size===0){
+            //     this.$emit("logPersonalInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+            // }
 
         },
         checkForm(){

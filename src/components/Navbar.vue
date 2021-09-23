@@ -22,8 +22,7 @@
 
                  
                 <router-link :to="{name: 'Products'}" class="navbar-item">Products</router-link>
-               
-
+                <router-link :to="{name: 'Customers'}" class="navbar-item">Customers</router-link>
                 <a class="navbar-item">
                     Orders
                 </a>

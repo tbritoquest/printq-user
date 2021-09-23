@@ -34,6 +34,7 @@ export default {
     /* background-color: #292a64;
     color: #fff; */
   }
+  
   .container{
     padding-top:52px;
       width: 100%;
