@@ -74,8 +74,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
-import axios from 'axios'
+import axios from "../http-common"
 
 export default {
     emits: ["logPersonalInfo"],
@@ -96,7 +95,7 @@ export default {
             this.checkForm()
             this.error = null
             if(this.errors.size === 0){
-                axios.post('/api/customers', {
+                axios.post('/customers', {
                     firstName: this.firstName,
                     lastName: this.lastName,
                     address: this.address,
