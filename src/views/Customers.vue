@@ -1,5 +1,5 @@
 <template>
-   <PersonalInfoForm @logPersonalInfo="logPersonalInfo" />
+   <PersonalInfoForm  />
 </template>
 
 <script>

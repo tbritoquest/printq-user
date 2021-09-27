@@ -79,7 +79,7 @@ export default {
            this.checkForm()
 
            if(this.errors.size===0){
-                this.$emit("logDateInfo", {orderDateValue:this.orderDateValue,sampleDateValue:this.sampleDateValue,Notes:this.notes})
+                this.$emit("logDateInfo", {orderDateValue:this.orderDateValue,sampleDateValue:this.sampleDateValue,notes:this.notes})
            }
         },
         checkForm(){

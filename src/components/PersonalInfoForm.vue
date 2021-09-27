@@ -2,9 +2,9 @@
 <div style="max-width:1024px;width:100%;">
     <!-- <h3 class="title is-3">Personal Info</h3> -->
 
-    <div class="notification is-light" v-bind:class="{ 'is-danger': this.error, 'is-success': this.success }" v-if="this.error || this.success">
-        <button class="delete"></button>
-        <p>{{error || success}} </p>
+    <div class="notification is-light" v-bind:class="{ 'is-danger': this.error}" v-if="this.error">
+      
+        <p>{{error}} </p>
     </div>
 
     <div class="columns">
@@ -69,15 +69,16 @@
         </div><br><br>
 
         <!-- <button @click="handleSubmit" class="button round next" type="button"><i class="fas fa-arrow-right"></i></button> -->
-        <button @click="handleSubmit" class="button next" type="button">NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
+        <button @click="handleSubmit" class="button next" type="button">Submit<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 </div>
 </template>
 
 <script>
 import axios from "../http-common"
+import Swal from 'sweetalert2'
 
 export default {
-    emits: ["logPersonalInfo"],
+    // emits: ["logPersonalInfo"],
     data(){
         return{
             errors: null,
@@ -103,11 +104,32 @@ export default {
                     phone: this.phone
                 })
                 .then(response => {
-                    console.log(response);
+                    
+                    this.resetForm()
+                    // display success notification
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                            })
+
+                    Toast.fire({
+                    icon: 'success',
+                    title: 'Saved successfully'
+                    })
+
                 })
                 .catch(error => {
-                    this.error = error
-                    console.log({error});
+                    //display error notification
+                    // let {message} = error.response.data[0]
+                    // this.error = message
+                    this.error = error.response.data[0].message
                 })
             }
             
@@ -147,6 +169,15 @@ export default {
         isInvalid(key){
             return this.errors && this.errors.has(key)
         },
+        resetForm(){
+            this.errors= null
+            this.firstName= null
+            this.lastName= null
+            this.address= null
+            this.email= null
+            this.phone= null
+            this.error= null
+        }
     },
  
  

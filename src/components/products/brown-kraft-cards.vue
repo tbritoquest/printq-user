@@ -30,7 +30,8 @@ import PersonalInfo from '../PersonalInfo.vue'
 import DateInfo from '../DateInfo.vue'
 import Project from '../products/projects/brown-kraft-project.vue'
 import Review from '../Review.vue'
-
+import axios from '../../http-common'
+import Swal from 'sweetalert2'
 
 export default {
     components: {
@@ -68,8 +69,26 @@ export default {
         previous(event){
             this.formStep.pop()
         },
+        
         handleSubmit(event){
-            console.log("submit")
+           
+            axios.post("/orders", {
+                customerId: this.personalInfoObj.customerId,
+                specifications: JSON.stringify(this.projectInfoObj),
+                notes: this.dateInfoObj.notes,
+                sampleDate: this.dateInfoObj.sampleDateValue
+            })
+                .then(response => {
+                    Swal.fire(
+                        'Order submitted',
+                        '',
+                        'success'
+                    )
+                    
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
 
     },

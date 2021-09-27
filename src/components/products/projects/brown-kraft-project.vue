@@ -76,7 +76,7 @@ export default {
             this.$emit("previous")
         },
         prevQuestion(){
-            console.log("previousQuestion")
+            // console.log("previousQuestion")
             document.querySelector('#next-button').style.display="block"
             this.showNextBtn = false
 
@@ -98,14 +98,13 @@ export default {
         },
         nextQuestion(){
             
-            console.log("nextQuestion")
+            // console.log("nextQuestion")
             //0. check if we've reached the end of form
             let fields = document.querySelectorAll("select")
             let node = fields[fields.length-1]
             let answerObj = answers.get(node.value)
 
             if(answerObj.path=== null){
-                console.log("END sort of")
                 document.querySelector('#next-button').style.display="none"
                 this.showNextBtn = true
                 // document.querySelector(".field.sample-date").classList.remove("hide")
@@ -132,7 +131,7 @@ export default {
 
                 // 0. Get latest question
                 let question = questions.get(stack[stack.length-1])
-                console.log(question)
+                // console.log(question)
                 //1. change label
                 let label = cloneNode.querySelector("label")
                 label.innerText = question.text

@@ -1,7 +1,5 @@
 <template>
   
- 
-
     <Navbar />
     <section class="container is-widescreen">
     
@@ -15,9 +13,13 @@
 <script>
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'
+
 export default {
   components: {
     Navbar
+  },
+  mounted(){
+  
   }
 }
 </script>

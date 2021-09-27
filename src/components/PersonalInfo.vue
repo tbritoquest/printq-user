@@ -2,74 +2,74 @@
 <div style="max-width:1024px;width:100%;">
     <!-- <h3 class="title is-3">Personal Info</h3> -->
 
+    <div class="notification is-warning" v-if="this.error">
+        Could not be found.<router-link :to="{name: 'Customers'}" > Create customer account?</router-link>
+   </div>
+
     <div class="columns">
-        <!--first name-->
-        <div class="column">
+        <div class="column ">
                 <div class="field">
-                    <label class="label">First name</label>
-                    <div class="control">
-                        <input v-model="firstName" class="input" type="text"   placeholder="First name"  v-bind:class="{ 'is-danger': isInvalid('fName') }" >
+                    <label class="label">Enter email associated with customer's account.</label>
+                    <div class="control email">
+                        <input v-model="email" class="input" type="text" placeholder="Email"  v-bind:class="{ 'is-danger': isInvalid('email') }" style="padding-right: 3em;">
+                        <i class="far fa-arrow-alt-circle-right" @click="handleSubmit"></i>
                     </div>
-                    
                 </div>
+            </div>
         </div>
-        <!--last name-->
+
+        <br><br>
+
+        <div class="customerDetails" v-if="this.firstName">
+            <div class="columns">
         <div class="column">
-            <div class="field">
-                    <label class="label">Last name</label>
-                    <div class="control">
-                        <input v-model="lastName" class="input" type="text" placeholder="Last name"  v-bind:class="{ 'is-danger': isInvalid('lName') }">
-                    </div>
-                </div>
+            <label class="label">First Name</label>
+            <div class="control">
+                {{firstName}}
+            </div>
         </div>
-    
+        <div class="column">
+            <label class="label">Last Name</label>
+            <div class="control">
+                {{lastName}}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="columns">
+        <div class="column">
+            <label class="label">Address</label>
+            <div class="control">
+                {{address}}
+            </div>
+        </div>
     </div>
 
     <div class="columns">
         <div class="column">
-                <div class="field">
-                <label class="label">Address</label>
-                <div class="control">
-                    <input v-model="address" class="input" type="text" placeholder="Address"  v-bind:class="{ 'is-danger': isInvalid('address') }">
-                </div>
-        </div>
+            <label class="label">Email</label>
+            <div class="control">
+                {{emailInfo}}
             </div>
         </div>
-
-        <div class="columns">
         <div class="column">
-                <div class="field">
-                <label class="label">Email</label>
-                <div class="control">
-                    <input v-model="email" class="input" type="email" placeholder="Email"  v-bind:class="{ 'is-danger': isInvalid('email')}">
-                    <p class="help is-danger" v-if="isInvalid('email')">
-                        This email is invalid
-                    </p>
-                </div>
+            <label class="label">Phone</label>
+            <div class="control">
+                {{phone}}
             </div>
-            </div>
-
-            <div class="column">
-                <div class="field">
-                <label class="label">Phone number</label>
-                <div class="control">
-                    <input v-model="phone" class="input" type="tel" placeholder="Phone number"  v-bind:class="{ 'is-danger': isInvalid('phone') }">
-                    <p class="help is-danger" v-if="isInvalid('phone')">
-                        This phone number is invalid
-                    </p>
-                </div>
-                
-            </div>
-            </div>
-        </div><br><br>
-
-        <!-- <button @click="handleSubmit" class="button round next" type="button"><i class="fas fa-arrow-right"></i></button> -->
-        <button @click="handleSubmit" class="button next" type="button">NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
+        </div>
+    </div>
+  
+        </div>
+        <button @click="handleNext" class="button next" type="button" v-if="this.firstName" >NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 </div>
 </template>
 
 <script>
 import {ref} from 'vue'
+import axios from "../http-common"
+
 export default {
     emits: ["logPersonalInfo"],
     data(){
@@ -78,40 +78,50 @@ export default {
             firstName: null,
             lastName: null,
             address: null,
-            email: null,
-            phone: null
+            emailInfo: null,
+            email:null,
+            phone: null,
+            error: null,
+            customerId: null
         }
 
     },
     methods: {
+
         handleSubmit(){
+            this.resetCustomerDetails()
             this.checkForm()
-           
-            if(this.errors.size===0){
-                this.$emit("logPersonalInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+            if(this.errors.size === 0){
+
+                axios.post('/customers/search',{
+                    email: this.email
+                }).then(response => {
+                    
+                    this.firstName = response.data.firstName
+                    this.lastName = response.data.lastName
+                    this.address = response.data.address
+                    this.emailInfo = response.data.email
+                    this.phone = response.data.phone
+                    this.customerId = response.data.id
+                }).catch(error => {
+                    this.error = error
+                })
+                
             }
+           
+            // if(this.errors.size===0){
+            //     axios.get()
+            //     // this.$emit("logPersonalInfo", {customerId: this.customerId})
+            // }
 
         },
         checkForm(){
-           this.errors = new Set()
-
-            if(!this.firstName){
-                this.errors.add("fName")
-            }
-            if(!this.lastName){
-                this.errors.add("lName")
-            }
-             if(!this.address){
-                this.errors.add("address")
-            }
+            this.errors = new Set()
+            this.error = null
             if(!this.email){
                 this.errors.add("email")
             }else if(!this.validEmail(this.email)){
                 this.errors.add("email")
-            }
-
-            if(!this.phone){
-                this.errors.add("phone")
             }
 
         },
@@ -122,12 +132,36 @@ export default {
         isInvalid(key){
             return this.errors && this.errors.has(key)
         },
+        resetCustomerDetails(){
+            this.errors= null
+            this.firstName= null
+            this.lastName= null
+            this.address= null
+            this.phone= null
+            this.error= null
+            this.emailInfo = null
+            this.customerId = null
+        },
+        handleNext(){
+            this.$emit("logPersonalInfo", {customerId: this.customerId, firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
+        }
     },
  
  
 }
 </script>
 
-<style>
-   
+<style scoped>
+    i.fa-arrow-alt-circle-right{
+        position: absolute;
+        top: 0.35em;
+        right: 0.5em;
+        font-size: 1.5em;
+        color: #625e5e;
+        cursor: pointer;
+    }
+    div.email{
+        width: 100%;
+        max-width: 400px;
+    }
 </style>
