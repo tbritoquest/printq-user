@@ -2,7 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import './assets/main.css'
-// // ES6 Modules or TypeScript
-// import Swal from 'sweetalert2'
+import store from '@/store'
+// import 'es6-promise/auto'
 
-createApp(App).use(router).mount('#app')
+
+
+createApp(App).use(router).use(store).mount('#app')
