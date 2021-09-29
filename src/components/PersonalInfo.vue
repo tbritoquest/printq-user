@@ -1,5 +1,5 @@
 <template>
-<div style="max-width:1024px;width:100%;">
+<div style="max-width:1024px;width:100%;margin: 80px auto;">
     <!-- <h3 class="title is-3">Personal Info</h3> -->
 
     <div class="notification is-warning" v-if="this.error">
@@ -143,10 +143,14 @@ export default {
             this.customerId = null
         },
         handleNext(){
+            this.$store.dispatch('signInCustomer')
             this.$emit("logPersonalInfo", {customerId: this.customerId, firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
         }
     },
- 
+    mounted(){
+        let customer = this.$store.state.customer 
+        this.email =  customer? customer.email:null
+    }
  
 }
 </script>

@@ -16,7 +16,7 @@ const routes = [
     name: 'Products',
     component: Products,
     beforeEnter: (to, from) => {
-      return this.$store.customer
+      // return this.$store.customer
       
     },
   },
@@ -30,7 +30,7 @@ const routes = [
     name: 'Cart',
     component: Cart,
     beforeEnter: (to, from) => {
-      return this.$store.customer
+      // return this.$store.customer
     },
   }
 ]

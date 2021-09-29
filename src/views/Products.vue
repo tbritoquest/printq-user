@@ -1,5 +1,7 @@
 <template>
-  <div class="grid-2">
+
+
+  <div class="grid-2" v-if="isCustomerSignedIn">
       <div class="sidebar">
 
           <ul class="flex">
@@ -17,14 +19,19 @@
           <component v-bind:is="currentTabComponent" ></component>
       </div>
   </div>
+
+    <CustomerEmailForm v-else/>
+
 </template>
 
 <script>
+import CustomerEmailForm from '../components/PersonalInfo.vue'
 import BrownKraftCards from '../components/products/brown-kraft-cards.vue'
 import AkuafoilCards from '../components/products/akuafoil.vue'
 
 export default {
     components:{
+            CustomerEmailForm,
              BrownKraftCards,
              AkuafoilCards
          },
@@ -38,6 +45,9 @@ export default {
     computed: {
         currentTabComponent() {
             return this.currentTab.replace(/\s/g,"")
+        },
+        isCustomerSignedIn(){
+            return this.$store.state.isCustomerSignedIn
         }
     }
 

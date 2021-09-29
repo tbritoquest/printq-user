@@ -21,7 +21,7 @@
             <div class="navbar-end">
 
                  
-                <router-link :to="{name: 'Products'}" class="navbar-item" v-if="customer">Products</router-link>
+                <router-link :to="{name: 'Products'}" class="navbar-item" >Products</router-link>
                 <router-link :to="{name: 'Customers'}" class="navbar-item">Customers</router-link>
                 <a class="navbar-item">
                     Orders
@@ -30,7 +30,7 @@
                 <a class="navbar-item">
                     Settings
                 </a>
-                <router-link :to="{name: 'Cart'}" class="navbar-item" v-if="customer"><i class="fas fa-shopping-cart"></i></router-link>
+                <router-link :to="{name: 'Cart'}" class="navbar-item" v-if="isCustomerSignedIn"><i class="fas fa-shopping-cart"></i></router-link>
         
             </div>
         </div>
@@ -42,6 +42,9 @@ export default {
     computed: {
         customer(){ 
             return this.$store.customer
+        },
+        isCustomerSignedIn(){
+            return this.$store.state.isCustomerSignedIn
         }
     }
 }
