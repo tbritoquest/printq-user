@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'
 import Customers from '../views/Customers.vue'
 import Cart from '../views/Cart.vue'
+import Orders from '../views/Orders.vue'
 // import Store from '@/store'
 
 const routes = [
@@ -32,6 +33,11 @@ const routes = [
     beforeEnter: (to, from) => {
       // return this.$store.customer
     },
+  },
+  {
+    path: '/orders',
+    name: 'Orders',
+    component: Orders
   }
 ]
 

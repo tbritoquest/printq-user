@@ -67,14 +67,14 @@
         <div class="column">
             <label class="label">Notes</label>
             <div class="control">
-                {{dateInfo.Notes}}
+                {{dateInfo.notes}}
             </div>
         </div>
        
     </div>
 
     <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button>
-    <button @click="handleSubmit" class="button next" type="button" >Submit<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
+    <button @click="handleSubmit" class="button next" type="button" >Add to cart<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 </template>
 
 <script>

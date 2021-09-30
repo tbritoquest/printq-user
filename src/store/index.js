@@ -18,6 +18,13 @@ export default createStore({
         },
         SIGNIN_CUSTOMER(state){
             state.isCustomerSignedIn = true
+        },
+        ADD_TO_CART(state, job){
+            job.specifications = JSON.parse(job.specifications)
+            state.jobs.push(job)
+        },
+        REMOVE_JOB(state, index){
+            state.jobs.splice(index,1)
         }
     },
     actions:{
@@ -26,6 +33,13 @@ export default createStore({
         },
         signInCustomer({commit}){
             commit('SIGNIN_CUSTOMER')
+        },
+        addToCart({commit}, payload){
+            commit('ADD_TO_CART', payload)
+        },
+        removeJob({commit}, payload){
+            console.log("blah")
+            commit('REMOVE_JOB', payload)
         }
     }
   })

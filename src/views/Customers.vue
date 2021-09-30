@@ -34,7 +34,7 @@
                                     <a href="#" class="dropdown-item">
                                         Edit
                                     </a>
-                                    <a class="dropdown-item" @click="handleNewOrder()">
+                                    <a class="dropdown-item" @click="handleNewOrder(index)">
                                         New Order
                                     </a>
                                
@@ -77,8 +77,8 @@ export default {
         }
     },
     methods:{
-        handleNewOrder(){
-            this.$store.dispatch('updateCustomer',this.customers[0])
+        handleNewOrder(index){
+            this.$store.dispatch('updateCustomer', this.customers[index])
             router.push({ path: 'products' })
             
         },

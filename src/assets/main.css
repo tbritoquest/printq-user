@@ -14,6 +14,7 @@
 .flex{
     display: flex;
     flex-direction: column;
+    /* justify-content: space-between; */
     height:100%;
 }
 .title{
@@ -87,4 +88,11 @@ input[name="orderDate"]{
 }
 .center{
     text-align: center !important;
+}
+.divider-40{
+    height:40px;
+    width:100%;
+}
+.text-underline{
+    text-decoration: underline;
 }

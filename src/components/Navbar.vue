@@ -23,14 +23,15 @@
                  
                 <router-link :to="{name: 'Products'}" class="navbar-item" >Products</router-link>
                 <router-link :to="{name: 'Customers'}" class="navbar-item">Customers</router-link>
-                <a class="navbar-item">
-                    Orders
-                </a>
+                <router-link :to="{name: 'Orders'}" class="navbar-item">Orders</router-link>
 
                 <a class="navbar-item">
                     Settings
                 </a>
-                <router-link :to="{name: 'Cart'}" class="navbar-item" v-if="isCustomerSignedIn"><i class="fas fa-shopping-cart"></i></router-link>
+                <router-link :to="{name: 'Cart'}" class="navbar-item shopping-cart" v-if="isCustomerSignedIn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="items" v-if="jobsCount">{{jobsCount}}</span>
+                </router-link>
         
             </div>
         </div>
@@ -41,15 +42,34 @@
 export default {
     computed: {
         customer(){ 
-            return this.$store.customer
+            return this.$store.state.customer
         },
         isCustomerSignedIn(){
             return this.$store.state.isCustomerSignedIn
+        },
+        jobsCount(){
+            return this.$store.getters.jobsCount
         }
     }
 }
 </script>
 
 <style>
-
+    .shopping-cart .items{
+        width: .875rem;
+        height: .875rem;
+        background-color: #d4d4d4;
+        top: 0.6rem;
+        right: 0.275rem;
+        font-family: poppins,sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: .625rem;
+        line-height: .9375rem;
+        text-transform: uppercase;
+        color: #111;
+        border-radius: 50%;
+        text-align: center;
+        position: absolute;
+    }
 </style>

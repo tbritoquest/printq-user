@@ -34,7 +34,7 @@
         </div>
 
 
-    <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button>
+    <!-- <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button> -->
     <button @click="handleSubmit" class="button next" type="button" v-if="showNextBtn">NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 
     <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button> -->
@@ -50,7 +50,8 @@
 
 import * as myTest from '../../../../public/js/brown-kraft.js'
 export default {
-    emits: ["logProjectInfo","previous"],
+    // emits: ["logProjectInfo","previous"],
+    emits: ["logProjectInfo"],
     data(){
         return{
             showNextBtn: false
@@ -69,12 +70,14 @@ export default {
                 let value = select.options[select.selectedIndex].innerText
                 project[label] = value
             }
+            
+            project["Product"] = "Brown Kraft Cards"
             this.$emit("logProjectInfo", project)
 
         },
-        previous(){
-            this.$emit("previous")
-        },
+        // previous(){
+        //     this.$emit("previous")
+        // },
         prevQuestion(){
             // console.log("previousQuestion")
             document.querySelector('#next-button').style.display="block"
