@@ -68,7 +68,7 @@ export default {
 
             const job = {
                 customerId: this.personalInfoObj.customerId,
-                specifications: JSON.stringify(this.projectInfoObj),
+                printSpecs: JSON.stringify(this.projectInfoObj),
                 notes: this.dateInfoObj.notes,
                 sampleDate: this.dateInfoObj.sampleDateValue
             }

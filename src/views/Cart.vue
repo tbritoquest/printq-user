@@ -10,11 +10,11 @@
           <div class="items">
             <div v-for="(job,index) in jobs">
               <div class="flex">
-                <h4 class="subtitle is-4">{{job.specifications["Product"]}} - {{job.specifications["Product Category"]}}</h4>
+                <h4 class="subtitle is-4">{{job.printSpecs["Product"]}} - {{job.printSpecs["Product Category"]}}</h4>
                 <a href="#" class="remove-btn" @click="remove(index)">Remove</a>
               </div>
               <ul class="specs">
-                <li v-for="(value, propertyName) in job.specifications">
+                <li v-for="(value, propertyName) in job.printSpecs">
                     <span style="font-weight:bold;">{{propertyName}}</span> : {{value}}
                 </li>
               </ul>
