@@ -14,15 +14,11 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-           
-
             </div>
 
             <div class="navbar-end">
-
-                 
-                <router-link :to="{name: 'Products'}" class="navbar-item" >Products</router-link>
                 <router-link :to="{name: 'Customers'}" class="navbar-item">Customers</router-link>
+                <router-link :to="{name: 'Products'}" class="navbar-item" >Products</router-link>
                 <router-link :to="{name: 'Orders'}" class="navbar-item">Orders</router-link>
 
                 <a class="navbar-item">
