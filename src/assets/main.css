@@ -27,7 +27,10 @@ hr{
 form .label{
     font-weight:400;
 }
-
+form{
+    width: 100%;
+    max-width: 1024px;
+}
 button.round{
     font-size: 1.5em;
     color: var(--purple-color);

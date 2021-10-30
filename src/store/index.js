@@ -22,6 +22,7 @@ export default createStore({
             state.isCustomerSignedIn = true
         },
         ADD_TO_CART(state, job){
+            console.log("JOB", job)
             job.printSpecs = JSON.parse(job.printSpecs)
             state.jobs.push(job)
         },
@@ -41,11 +42,19 @@ export default createStore({
                 router.push('orders')
               })
               .catch(error => {
-                console.log(error);
+                console.log(error)
               });
+        },
+        RESET_CUSTOMER(state){
+            state.customer = {}
+            state.isCustomerSignedIn = false
+            state.jobs =  []
         }
     },
     actions:{
+        resetCustomer({commit}){
+            commit('RESET_CUSTOMER')
+        },
         updateCustomer ({ commit }, payload) {
             commit('UPDATE_POST', payload)
         },

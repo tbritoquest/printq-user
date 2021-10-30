@@ -68,7 +68,6 @@
             </div>
         </div><br><br>
 
-        <!-- <button @click="handleSubmit" class="button round next" type="button"><i class="fas fa-arrow-right"></i></button> -->
         <button @click="handleSubmit" class="button next" type="button">Submit<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
 </div>
 </template>
@@ -126,17 +125,9 @@ export default {
 
                 })
                 .catch(error => {
-                    //display error notification
-                    // let {message} = error.response.data[0]
-                    // this.error = message
                     this.error = error.response.data[0].message
                 })
             }
-            
-
-            // if(this.errors.size===0){
-            //     this.$emit("logPersonalInfo", {firstName: this.firstName,lastName: this.lastName,address: this.address,email: this.email,phone: this.phone})
-            // }
 
         },
         checkForm(){

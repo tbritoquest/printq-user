@@ -1,6 +1,6 @@
 <template>
-    <!-- <h3 class="title is-3">Dates</h3> -->
 
+    <!--ORDER DATE field-->
      <div class="field is-horizontal">
         <div class="field-label is-normal">
             <label class="label">Order Date</label>
@@ -14,42 +14,58 @@
         </div>
     </div>
 
+    <!--SAMPLE DATE field-->
     <div class="field is-horizontal">
-    <div class="field-label is-normal">
-        <label class="label">Sample Date</label>
+        <div class="field-label is-normal">
+            <label class="label">Sample Date</label>
+        </div>
+        <div class="field-body">
+            <div class="field is-narrow">
+            <div class="control">
+                <input type="date" class="date-input" name="sampleDate"
+                                    v-model="sampleDateValue"
+                                    :min="sampleDateMin"
+                                    :disabled="isSampleDatePending"><br>
+                <input type="checkbox" id="dateCheckbox" name="sampleDate" value="pending" v-model="isSampleDatePending">
+                <label for="date"> Date pending</label><br>              
+                <p class="help is-danger" v-if="isInvalid('sampleDate')">Please select a date</p>
+            </div>
+            </div>
+        </div>
     </div>
-    <div class="field-body">
-        <div class="field is-narrow">
-        <div class="control">
-            <input type="date" class="date-input" name="sampleDate"
-                                v-model="sampleDateValue"
-                                :min="sampleDateMin">
-            <p class="help is-danger" v-if="isInvalid('sampleDate')">
-                        Please select a date
+
+    <!--JOB NAME field-->
+    <div class="field is-horizontal">
+        <div class="field-label is-normal">
+            <label class="label">Job Name</label>
+        </div>
+        <div class="field-body">
+            <div class="field">
+            <div class="control">
+                <input class="input" v-bind:class="{ 'is-danger': isInvalid('jobName') }" type="text" v-model="jobName">
+            </div>
+            <p class="help is-danger" v-if="isInvalid('jobName')">
+                This field is required
             </p>
-        </div>
+            </div>
         </div>
     </div>
-    </div>
 
-
+    <!-- NOTES field-->
     <div class="field is-horizontal">
-    <div class="field-label is-normal">
-        <label class="label">Notes</label>
-    </div>
-    <div class="field-body">
-        <div class="field">
-        <div class="control">
-            <textarea class="textarea" placeholder="Notes" v-model="notes"></textarea>
+        <div class="field-label is-normal">
+            <label class="label">Notes</label>
         </div>
+        <div class="field-body">
+            <div class="field">
+            <div class="control">
+                <textarea class="textarea" placeholder="Notes" v-model="notes"></textarea>
+            </div>
+            </div>
         </div>
-    </div>
     </div>
 
     <br><br>
-
-        <!-- <button @click="previous" class="button round previous" type="button"><i class="fas fa-arrow-left"></i></button>
-        <button @click="handleSubmit" class="button round next primary" type="button"><i class="fas fa-arrow-right"></i></button> -->
 
     <button @click="previous" class=" previous" type="button">PREVIOUS STEP</button>
     <button @click="handleSubmit" class="button next" type="button" >NEXT<i class="fas fa-arrow-right" style="margin-left:12px;"></i></button>
@@ -69,7 +85,9 @@ export default {
             orderDateValue:format(new Date(),'yyyy-MM-dd'),
             sampleDateMin:format(new Date(),'yyyy-MM-dd'),
             sampleDateValue:"",
-            notes: ""
+            notes: "",
+            isSampleDatePending: false,
+            jobName: ""
         }
 
     },
@@ -78,14 +96,20 @@ export default {
         handleSubmit(){
            this.checkForm()
 
+            let dateSample = this.isSampleDatePending? "pending":this.sampleDateValue
+            
            if(this.errors.size===0){
-                this.$emit("logDateInfo", {orderDateValue:this.orderDateValue,sampleDateValue:this.sampleDateValue,notes:this.notes})
+                this.$emit("logDateInfo", {orderDateValue:this.orderDateValue,sampleDateValue:dateSample,notes:this.notes,name:this.jobName})
            }
         },
         checkForm(){
             this.errors = new Set()
-            if(!this.sampleDateValue){
+            if(!this.isSampleDatePending && !this.sampleDateValue){
                 this.errors.add("sampleDate")
+            }
+
+            if(this.jobName.length<1){
+                this.errors.add("jobName")
             }
         },
         isInvalid(key){
@@ -94,7 +118,11 @@ export default {
         previous(){
             this.$emit("previous")
         },
-       
+    },
+    watch: {
+        sampleDateValue: function(val){
+            this.isSampleDatePending = false
+        }
     }
  
 }
@@ -105,4 +133,5 @@ export default {
         background: var(--purple-color);
         color: #fff;
     }
+    
 </style>

@@ -75,16 +75,9 @@ export default {
             this.$emit("logProjectInfo", project)
 
         },
-        // previous(){
-        //     this.$emit("previous")
-        // },
         prevQuestion(){
-            // console.log("previousQuestion")
             document.querySelector('#next-button').style.display="block"
             this.showNextBtn = false
-
-
-
              //remove current question from stack
             stack.pop()
             //remove from DOM
@@ -110,9 +103,6 @@ export default {
             if(answerObj.path=== null){
                 document.querySelector('#next-button').style.display="none"
                 this.showNextBtn = true
-                // document.querySelector(".field.sample-date").classList.remove("hide")
-                // document.querySelector(".field.notes").classList.remove("hide")
-                // return
             }else{
                 // 1a. disable current input field 
                 node.setAttribute("disabled",true)

@@ -12,16 +12,11 @@
                 <span>Show</span>
                 <div class="select">
                     <select v-model="selected" >
-                        <!-- <option value=10>10</option> -->
-                        <!-- <option value=50>50</option>
+                        <option value=10>10</option>
+                        <option value=50>50</option>
                         <option value=100>100</option>
                         <option value=500>500</option>
-                        <option value=1000>1000</option> -->
-                        <option value=1>1</option>
-                        <option value=2>2</option>
-                        <option value=3>3</option>
-                        <option value=5>5</option>
-                        <option value=50>50</option>
+                        <option value=1000>1000</option>
                     </select>
 
                 </div>
@@ -108,6 +103,7 @@ import axios from "../http-common"
 import router from '../router'
 import _ from 'lodash'
 import CreateCustomer from "../components/Customer/CreateCustomer.vue"
+import Swal from 'sweetalert2'
 
 export default {
     components:{
@@ -117,7 +113,7 @@ export default {
     data(){
         return{
             customers: null,
-            selected: 1,
+            selected: 10,
             page: 1,
             numOfPages: null,
             next: null,
@@ -129,7 +125,7 @@ export default {
     methods:{
         searchit: _.debounce(
             function () { 
-                // this.searchCustomers()
+                this.page = 1
                 this.getCustomers()
             }, 300
         ),   
@@ -140,8 +136,28 @@ export default {
             this.page = this.prev.page
         },
         handleNewOrder(index){
-            this.$store.dispatch('updateCustomer', this.customers[index])
-            router.push({ path: 'products' })
+            if(this.$store.state.isCustomerSignedIn){
+                //show message
+                Swal.fire({
+                title: 'Are you sure?',
+                text: "An order is currently in progress.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove it'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.$store.dispatch('resetCustomer')
+                    this.$store.dispatch('updateCustomer', this.customers[index])
+                    router.push({ path: 'products' })
+                }
+                })
+                
+            }else{
+                this.$store.dispatch('updateCustomer', this.customers[index])
+                router.push({ path: 'products' })
+            }
             
         },
         toggle(id){
@@ -153,35 +169,23 @@ export default {
             if(openedEl) openedEl.classList.remove("is-active")
         },
         getCustomers(page){
-            console.log("getcustomers")
-            axios.get(`/customers?page=${page || this.page}&limit=${this.selected}&search=${this.search}`)
+            let query = `page=${page || this.page}&limit=${this.selected}&search=${this.search}`
+
+            axios.get(`/customers?${query}`)
             .then(response => {
                 if(page) this.page = 1
-                // handle success
+
                 this.numOfPages = response.data.numOfPages
                 this.customers = response.data.results
                 this.next = response.data.next
                 this.prev = response.data.previous
             })
             .catch(error => {
-                // handle error
                 console.log(error);
                  this.numOfPages = null
                 this.customers = null
             })
         },
-        // searchCustomers(){
-        //     axios.post('/customers/searchAll',{
-        //         query: this.search,
-        //         page: this.page
-        //     }).then(response => {
-        //         console.log(response.data)
-        //         this.customers = response.data
-        //     })
-        //     .catch(error => {
-        //         console.log(error)
-        //     })
-        // },
         openNewCustomerForm(){
             document.getElementById('createCustomerForm').classList.add('is-active')
         }

@@ -109,10 +109,6 @@ export default {
                 
             }
            
-            // if(this.errors.size===0){
-            //     axios.get()
-            //     // this.$emit("logPersonalInfo", {customerId: this.customerId})
-            // }
 
         },
         checkForm(){

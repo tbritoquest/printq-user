@@ -1,22 +1,26 @@
 <template>
-   <!-- <PersonalInfoForm  /> -->
+
    <div class="orders">
-
-       <div class="flex">
-            <h1 class="title">Orders</h1>
-            <button class="button is-primary" @click="openNewCustomerForm">Add Customer</button>
-       </div>
-
+        <h1 class="title mb-4">Orders</h1>
+       
        <div class="action_bar">
            <div class="control">
                 <i class="fas fa-search"></i>
                 <input class="input" type="text" placeholder="Search by Job Name" v-model="search" @keyup="searchit">
+
+                <div class="dropdown-menu" id="dropdown-menu" role="menu" style="display:block;" v-if="search.length">
+                    <div class="dropdown-content">
+                    <a v-for="(job, index) in jobs" href="#" class="dropdown-item" @click="searchBy(job.orderId)" >
+                        {{formatOrderId(job.orderId)}} - {{job.name}}
+                    </a>
+                    </div>
+                </div>
             </div>
 
            <div class="num-entries">
                 <span>Filter: </span>
                 <div class="select">
-                    <select v-model="selected" >
+                    <select v-model="dateSelected" >
                         <option value="0">Today</option>
                         <option value="1">Yesterday</option>
                         <option value="7">Last 7 days</option>
@@ -60,9 +64,9 @@
             </div>
             
             <div class="grid border job-list" v-for="(job, index) in order.Jobs" >
-                <p>{{formatOrderId(order.id)}}-00{{index+1}}</p>
-                <p>Name</p>
-                <p>{{job.status}}</p>
+                <a @click="test(job.notes)"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>
+                <span>{{job.name}}</span>
+                <span>{{job.status}}</span>
             </div>
 
 
@@ -90,7 +94,8 @@ export default {
     data(){
         return{
             orders: null,
-            selected: 30,
+            jobs:null,
+            dateSelected: 30,
             page: 1,
             numOfPages: null,
             next: null,
@@ -101,36 +106,49 @@ export default {
         }
     },
     methods:{
+        test(job){
+            console.log("JOB: ", job)
+        },
+        searchBy(id){
+            axios.get(`/orders/${id}`)
+                .then(response=>{
+                    this.jobs = null
+                    this.search = ''
+                    this.orders = []
+                    this.orders.push(response.data)
+                }).catch(error =>{
+                    console.log(error)
+                })
+
+        },
         formatOrderId(id){
-            return `0000${id}`
+            return String(id).padStart(8,'0')
+            
         },
         searchit: _.debounce(
             function () { 
-                // this.searchCustomers()
-                this.getOrders()
+                this.getJobs()
             }, 300
-        ),   
-        handleNext(){
-            this.page = this.next.page
-        },
-        handlePrevious(){
-            this.page = this.prev.page
-        },
-        handleNewOrder(index){
-            this.$store.dispatch('updateCustomer', this.customers[index])
-            router.push({ path: 'products' })
-            
-        },
-        toggle(id){
-            let openedEl = document.getElementById(`customer${id}`)
-            if(openedEl) openedEl.classList.toggle("is-active")
-        },
+        ),
         close(id){
             let openedEl = document.getElementById(`customer${id}`)
             if(openedEl) openedEl.classList.remove("is-active")
         },
+        getJobs(){
+            if(this.search == ''){
+                this.jobs = null
+            }else{
+                axios.get(`/jobs?search=${this.search}`)
+                .then(response=>{
+                    this.jobs = response.data.results
+                }).catch(error =>{
+                    console.log(error)
+                })
+            }
+            
+        },
         getOrders(page){
-            axios.get('/orders')
+            axios.get(`/orders?date=${this.dateSelected}`)
             .then(response => {
                 this.orders = response.data.results
                 
@@ -148,7 +166,7 @@ export default {
 
     },
     watch: {
-        selected: function(val) {
+        dateSelected: function(val) {
             this.getOrders(1)
         },
         page: function(val){
@@ -190,10 +208,13 @@ export default {
     }
     .orders .action_bar{
         background: #fcfbfc;
-        padding:1em;
-        margin-bottom:2em;
-        display:grid;
+        padding: 1em;
+        margin-bottom: 2em;
+        display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+    .orders #dropdown-menu{
+        width: 100%;
     }
     .orders .action_bar input{
         padding-left: 2.5em;
@@ -213,6 +234,7 @@ export default {
         display: flex;
         align-items: center;
         gap: 0.5em;
+        justify-self: flex-end;
     }
     .orders .flex{
         display: flex;

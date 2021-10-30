@@ -49,16 +49,11 @@ export default {
         
         logProjectInfo(event){
             this.projectInfoObj = event
-            // this.formStep.push(3)
             this.formStep.push(2)
         },
         logDateInfo(event){
             this.dateInfoObj = event
-            // this.formStep.push(4)
             this.formStep.push(3)
-            /**
-             * submit form
-             */
         },
         previous(event){
             this.formStep.pop()
@@ -70,7 +65,8 @@ export default {
                 customerId: this.personalInfoObj.customerId,
                 printSpecs: JSON.stringify(this.projectInfoObj),
                 notes: this.dateInfoObj.notes,
-                sampleDate: this.dateInfoObj.sampleDateValue
+                sampleDate: this.dateInfoObj.sampleDateValue,
+                name: this.dateInfoObj.name
             }
 
             this.$store.dispatch('addToCart', job)
