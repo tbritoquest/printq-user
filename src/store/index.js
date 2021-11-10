@@ -22,7 +22,6 @@ export default createStore({
             state.isCustomerSignedIn = true
         },
         ADD_TO_CART(state, job){
-            console.log("JOB", job)
             job.printSpecs = JSON.parse(job.printSpecs)
             state.jobs.push(job)
         },

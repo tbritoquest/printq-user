@@ -64,7 +64,7 @@
             </div>
             
             <div class="grid border job-list" v-for="(job, index) in order.Jobs" >
-                <a @click="test(job.notes)"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>
+                <a @click="test(job,order)"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>
                 <span>{{job.name}}</span>
                 <span>{{job.status}}</span>
             </div>
@@ -106,8 +106,10 @@ export default {
         }
     },
     methods:{
-        test(job){
-            console.log("JOB: ", job)
+        test(job,order){
+            console.log(order)
+            console.log(job)
+            // console.log("JOB: ", job.notes.notes[0])
         },
         searchBy(id){
             axios.get(`/orders/${id}`)
