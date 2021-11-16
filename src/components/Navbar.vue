@@ -1,8 +1,8 @@
 <template>
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+            <a class="navbar-item" href="/">
+            <img src="https://lh5.googleusercontent.com/-ydOZdFk-1eE/AAAAAAAAAAI/AAAAAAAAAAA/crYmjh94iU0/s44-p-k-no-ns-nd/photo.jpg" style="border-radius: 100px;" >
             </a>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
