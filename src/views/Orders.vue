@@ -10,9 +10,9 @@
 
                 <div class="dropdown-menu" id="dropdown-menu" role="menu" style="display:block;" v-if="search.length">
                     <div class="dropdown-content">
-                    <a v-for="(job, index) in jobs" href="#" class="dropdown-item" @click="searchBy(job.orderId)" >
-                        {{formatOrderId(job.orderId)}} - {{job.name}}
-                    </a>
+                        <a v-for="(job, index) in jobs" href="#" class="dropdown-item" @click="searchBy(job.orderId)" >
+                            {{formatOrderId(job.orderId)}} - {{job.name}}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -26,6 +26,17 @@
                         <option value="7">Last 7 days</option>
                         <option value="30">Last 30 days</option>
                         <option value="90">Last 90 days</option>
+                    </select>
+
+                </div>
+
+                <div class="select">
+                    <select v-model="statusSelected" >
+                        <option value="">Show all</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="completed">Completed</option>
+                        <option value="new">New</option>
+                        <option value="under review">Under Review</option>
                     </select>
 
                 </div>
@@ -63,14 +74,13 @@
                 <div></div>
             </div>
             
-            <div class="grid border job-list" v-for="(job, index) in order.Jobs" >
+            <div v-for="(job, index) in order.Jobs" >
+                <div v-if="statusSelected == ''  || statusSelected==job.status" class="grid border job-list">
                 <a @click="openJobEditForm(job,order,formatJobId(index+1))"><span>{{formatOrderId(order.id)}}-{{formatJobId(index+1)}}</span></a> 
-                <!-- <a @click="openJobEditForm(job,order,formatJobId(index+1))"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>  -->
                 <span>{{job.name}}</span>
                 <span>{{job.status}}</span>
+                </div>
             </div>
-
-
 
         </div>
 
@@ -104,7 +114,8 @@ export default {
             showNewCustomerForm:false,
             format,
             visible:false,
-            jobSelected: null
+            jobSelected: null,
+            statusSelected: ""
         }
     },
     methods:{
@@ -279,7 +290,7 @@ export default {
         padding-bottom:12px;
         border-bottom: 0 !important;
     }
-    .job-list:last-child{
+    .order-list{
         border-bottom:1px solid grey !important;
     }
 </style>

@@ -79,7 +79,7 @@ export default {
    .homepage .form input:focus{
     border: none;
   }
-  .homepage .form button{
+  .homepage .form .button{
       color:#fff;
       background: #4C6FFF;
       border-radius:8px;
