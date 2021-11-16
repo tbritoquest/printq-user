@@ -64,7 +64,8 @@
             </div>
             
             <div class="grid border job-list" v-for="(job, index) in order.Jobs" >
-                <a @click="test(job,order)"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>
+                <a @click="openJobEditForm(job,order,formatJobId(index+1))"><span>{{formatOrderId(order.id)}}-{{formatJobId(index+1)}}</span></a> 
+                <!-- <a @click="openJobEditForm(job,order,formatJobId(index+1))"><span>{{formatOrderId(order.id)}}-00{{index+1}}</span></a>  -->
                 <span>{{job.name}}</span>
                 <span>{{job.status}}</span>
             </div>
@@ -73,15 +74,14 @@
 
         </div>
 
-
-     
+     <JobEdit v-on:close="closeJobEditForm()" v-if="visible" v-bind:job="jobSelected"/>
    </div>
 
     
 </template>
 
 <script>
-import PersonalInfoForm from "../components/PersonalInfoForm.vue"
+import JobEdit from "../components/JobEdit.vue"
 import axios from "../http-common"
 import router from '../router'
 import _ from 'lodash'
@@ -89,7 +89,7 @@ import { format } from 'date-fns'
 
 export default {
     components:{
-        PersonalInfoForm
+        JobEdit
     },
     data(){
         return{
@@ -102,14 +102,22 @@ export default {
             prev: null,
             search: '',
             showNewCustomerForm:false,
-            format
+            format,
+            visible:false,
+            jobSelected: null
         }
     },
     methods:{
-        test(job,order){
+       closeJobEditForm(){
+           console.log("closeJobEditForm")
+           this.visible = false
+       },
+        openJobEditForm(job,order,indexOfJob){
             console.log(order)
             console.log(job)
-            // console.log("JOB: ", job.notes.notes[0])
+            this.visible = true
+            this.jobSelected = {...job,order,indexOfJob}
+            // document.getElementById('createCustomerForm').classList.add('is-active')
         },
         searchBy(id){
             axios.get(`/orders/${id}`)
@@ -125,7 +133,9 @@ export default {
         },
         formatOrderId(id){
             return String(id).padStart(8,'0')
-            
+        },
+        formatJobId(id){
+            return String(id).padStart(3,'0')
         },
         searchit: _.debounce(
             function () { 

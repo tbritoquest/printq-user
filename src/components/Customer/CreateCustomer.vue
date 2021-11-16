@@ -175,12 +175,12 @@ export default {
              if(!this.address){
                 this.errors.add("address")
             }
+
             if(!this.email){
                 this.errors.add("email")
             }else if(!this.validEmail(this.email)){
                 this.errors.add("email")
             }
-
             if(!this.phone){
                 this.errors.add("phone")
             }

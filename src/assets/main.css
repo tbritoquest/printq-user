@@ -2,8 +2,26 @@
     --grey-color: #f4f6f8;
     --purple-color: #3e4095;
     --orange-color: #ff6f21;
+    --action-color: #36CB83;
+    --new-color: #CDE4FC;
+    --cancelled-color: #EDEDED;
+    --completed-color: #D0FBE7;
+    --review-color: #FFEFCF;
+
 }
 
+.review{
+    background:var(--review-color)
+}
+.completed{
+    background:var(--completed-color);
+}
+.cancelled{
+    background:var(--cancelled-color);
+}
+.new{
+    background:var(--new-color);
+}
 /* .primary{
     background-color: var(--purple-color);
     color:#fff;
