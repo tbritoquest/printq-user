@@ -6,7 +6,7 @@
        <div class="action_bar">
            <div class="control">
                 <i class="fas fa-search"></i>
-                <input class="input" type="text" placeholder="Search by Job Name" v-model="search" @keyup="searchit">
+                <input class="input" type="text" placeholder="Search by Job Name or Job Number" v-model="search" @keyup="searchit">
 
                 <div class="dropdown-menu" id="dropdown-menu" role="menu" style="display:block;" v-if="search.length">
                     <div class="dropdown-content">

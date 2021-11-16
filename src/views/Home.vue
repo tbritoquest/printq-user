@@ -10,7 +10,7 @@
         <div class="field">
           <label class="label">Email</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input" type="email">
+            <input class="input" type="email" value="John Doe">
           
           </div>
           <!-- <p class="help is-danger">This email is invalid</p> -->
@@ -19,19 +19,21 @@
         <div class="field">
           <label class="label">Password</label>
           <div class="control has-icons-left has-icons-right">
-            <input class="input" type="password">
+            <input class="input" type="password" value="1234567890">
           </div>
           <p class="help">Must be 8 characters at least</p>
         </div>
 
           <div class="other">
             <label class="checkbox">
-              <input type="checkbox">
+              <input type="checkbox" checked>
               Remember me
             </label>
             <a href="">Forgot password?</a>
           </div><br>
-        <button class="button  is-fullwidth">Sign in</button>
+        <!-- <button class="button  is-fullwidth" > -->
+          <router-link :to="{name: 'Customers'}" class="navbar-item button is-fullwidth is-medium">Sign in</router-link>
+        <!-- </button> -->
       </div>
     </div>
   </div>
@@ -55,7 +57,7 @@ export default {
   .homepage .pic img{
     height:530px;
   }
-  .center {
+  .homepage .center {
     display: flex;
     justify-content: center;
     align-items: center;
